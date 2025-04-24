@@ -1,6 +1,3 @@
-# 🚀 Status do Projeto  
-![Status](https://img.shields.io/badge/Status-Em%20Andamento-yellow)
-
 # 🧠 Nome do Projeto
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia imperdiet sapien a mattis. Morbi tempus at eros vel lacinia.
