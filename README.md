@@ -2,6 +2,9 @@
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia imperdiet sapien a mattis. Morbi tempus at eros vel lacinia.
 
+## 🚀 Status do Projeto  
+![Status](https://img.shields.io/badge/Status-Em%20Andamento-yellow)
+
 ## 🔬 Sobre o Projeto
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia imperdiet sapien a mattis. Morbi tempus at eros vel lacinia.
@@ -35,5 +38,8 @@ O projeto inclui:
 │   └── processed/        # Dados processados
 ├── notebooks/            # Notebooks Jupyter
 ├── src/                  # Código-fonte
-├── models/               # Modelos treinados
+│   ├── models/           # Classes de modelos
+│   ├── utils/            # Funções auxiliares
+│   └── __init__.py       
+├── trained_models/       # Modelos treinados
 └── README.md
