@@ -217,8 +217,8 @@ class MLP(nn.Module):
         criterion = nn.BCEWithLogitsLoss() if self.n_classes == 1 else nn.CrossEntropyLoss()        # função de perda diferente para classificação binária ou multiclasse 
 
         if self.n_classes > 1:
-            y_train = y_train.long()
-            y_val = y_val.long() if y_val is not None else None
+            y_train = torch.tensor(y_train).long()
+            y_val = torch.tensor(y_val).long() if y_val is not None else None
 
         loss_train_list = []
         loss_valid_list = []
@@ -234,6 +234,8 @@ class MLP(nn.Module):
             # Loss
             y_train = (y_train + 1) // 2 if self.n_classes == 1 else y_train
             y_val = (y_val + 1) // 2 if self.n_classes == 1 and X_val is not None and y_val is not None else y_val
+            y_train = y_train.squeeze() if self.n_classes > 1 else y_train
+
             loss = criterion(output, y_train)
             loss_train_list.append(loss.item())
 
@@ -270,6 +272,7 @@ class MLP(nn.Module):
             if X_val is not None and y_val is not None:
                 self.eval()
                 with torch.no_grad():
+                    y_val = y_val.squeeze() if self.n_classes > 1 else y_val
                     val_output = self.forward(X_val)
                     val_loss = criterion(val_output, y_val)
                     loss_valid_list.append(val_loss.item())
@@ -277,7 +280,7 @@ class MLP(nn.Module):
                     accuracy_valid = self.compute_accuracy(val_output, y_val, self.n_classes)
                     accuracy_valid_list.append(accuracy_valid)
 
-                print(f"Epoch {epoch+1}/{self.n_epochs} - Train Loss: {loss.item():.4f} - Val Loss: {val_loss:.4f} - Train Accuracy: {accuracy_train:.4f} - Val Accuracy: {accuracy_valid:.4f}")
+                print(f"Epoca {epoch+1}/{self.n_epochs} - Perda (treino): {loss.item():.4f} - Perda (validacao): {val_loss:.4f} - Acuracia (treino): {accuracy_train:.4f} - Acuracia (validacao): {accuracy_valid:.4f}")
 
                 self.check_early_stop(val_loss.item())
 
@@ -285,7 +288,7 @@ class MLP(nn.Module):
                     break
 
             else:
-                print(f"Epoch {epoch+1}/{self.n_epochs} - Train Loss: {loss.item():.4f} - Train Accuracy: {accuracy_train:.4f}")
+                print(f"Epoca {epoch+1}/{self.n_epochs} - Perda (treino): {loss.item():.4f} - Acuracia (treino): {accuracy_train:.4f}")
 
 
         return loss_train_list, loss_valid_list, accuracy_train_list, accuracy_valid_list
